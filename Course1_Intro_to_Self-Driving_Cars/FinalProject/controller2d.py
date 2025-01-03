@@ -205,9 +205,9 @@ class Controller2D(object):
                 example, can treat self.vars.v_previous like a "global variable".
             """
             #### Pure Pursuit Controller
-            lool_ahead_idx = self.vars.closest_waypoints_idx + 1000 ## Look 10 meters Ahead
+            look_ahead_idx = self.vars.closest_waypoints_idx + 1000 ## Look 10 meters Ahead
 
-            x_2 = np.array([waypoints[lool_ahead_idx][0], waypoints[lool_ahead_idx][1]]) ## Look Ahead Point
+            x_2 = np.array([waypoints[look_ahead_idx][0], waypoints[look_ahead_idx][1]]) ## Look Ahead Point
             x_1 = np.array([x, y])  ## Current Position
 
             vector_towards_lookahead_point = x_2 - x_1
@@ -218,15 +218,30 @@ class Controller2D(object):
             l_d = np.linalg.norm(x_2 - x_1)
             
             ## Pure Pursuit With lookahead distance
-            stear_angle_ld = np.arctan((2 * 1.5 * np.sin(angle)) / (l_d + 1))
+            vehicle_length = 1.5 ## 1.5 meters
+            epsilon = 1 ## To Stabilize at low speeds
+            stear_angle_ld = np.arctan((2 * vehicle_length* np.sin(angle)) / (l_d + epsilon)) 
 
             ## Pure Pursuit with Velocity Consideration
-            stear_angle_vel = np.arctan((2 * 1.5 * np.sin(angle))/(0.1*v + 1))
+            K_dd = 0.1
+            stear_angle_vel = np.arctan((2 * vehicle_length * np.sin(angle))/(K_dd*v + epsilon))
 
             ## Stanley Controller
-            
-            # # Change the steer output with the lateral controller. 
-            steer_output = stear_angle_vel
+            ## Heading Error
+            trajectory_vector = np.array(waypoints[50 + self.vars.closest_waypoints_idx]) - np.array(waypoints[self.vars.closest_waypoints_idx])
+            trajectory_angle = np.arctan2(trajectory_vector[1], trajectory_vector[0])
+            heading_error = trajectory_angle - yaw
+
+            ## Cross Track Error
+            k = 1
+            cross_track_e = np.array([x, y]) - np.array(waypoints[self.vars.closest_waypoints_idx][:2])
+            sign = np.sign(np.cross(cross_track_e, trajectory_vector[:2]))
+            cross_track_error = np.arctan(k * sign *np.linalg.norm(cross_track_e) / (v+epsilon))
+
+            stear_angle_stanley = heading_error + cross_track_error
+
+            #Change the steer output with the lateral controller. 
+            steer_output = stear_angle_stanley
 
             ######################################################
             # SET CONTROLS OUTPUT
