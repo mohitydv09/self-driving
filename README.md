@@ -11,3 +11,9 @@ Self Driving Vechicle Lateral and Longitudinal Control: (link to youtube video)
 ### Certificate
 
 ![Course 1 Certificate](./Course1_Intro_to_Self-Driving_Cars/Coursera%20GWSE4KPS0V07.jpg)
+
+## State Estimation and Localization for Self-Driving Cars
+
+### Certificate
+
+![Course 2 Certificate](./Course2_State_Estimation_and_Localization/Coursera%20SPGANKUPOB08.jpg)
