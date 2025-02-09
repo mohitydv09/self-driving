@@ -18,6 +18,8 @@ Self Driving Vechicle Lateral and Longitudinal Control: (link to youtube video)
 
 ![Course 2 Certificate](./Course2_State_Estimation_and_Localization/Coursera%20SPGANKUPOB08.jpg)
 
+## Visual Perception for Self-Driving Cars
+
 ### Certificate
 
-![Course 3 Certificate](./Course3_Perception_for_Self-Driving_Cars/Coursera%I7ZEIQ8YMGW3.jpg)
+![Course 3 Certificate](./Course3_Perception_for_Self-Driving_Cars/Coursera%20I7ZEIQ8YMGW3.jpg)
